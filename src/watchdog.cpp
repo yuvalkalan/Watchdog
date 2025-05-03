@@ -3,11 +3,11 @@
 #include "pico/cyw43_arch.h"
 #include "pico/multicore.h"
 #include "SerialIn/SerialIn.h"
+#include "Wifi/Wifi.h"
 
 // set wifi ssid and password
 #define WIFI_SSID "Rafi"           // wifi ssid
 #define WIFI_PASSWORD "sharonrafi" // wifi password
-
 SerialIn srl_in;
 
 int core0()
@@ -37,6 +37,9 @@ int core0()
         uint8_t *ip_address = (uint8_t *)&(cyw43_state.netif[0].ip_addr.addr);
         printf("IP address %d.%d.%d.%d\n", ip_address[0], ip_address[1], ip_address[2], ip_address[3]);
     }
+
+    run_tcp_client_test();
+    cyw43_arch_deinit();
     return 0;
 
     // while (true)

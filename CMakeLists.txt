@@ -34,24 +34,27 @@ project(watchdog C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-add_executable(${PROJECT_NAME} watchdog.cpp)
+add_executable(${PROJECT_NAME} src/watchdog.cpp)
 target_sources(${PROJECT_NAME} PRIVATE 
-        watchdog.cpp
-        SerialIn/SerialIn.cpp
+        src/watchdog.cpp
+        src/SerialIn/SerialIn.cpp
+        src/Wifi/Wifi.cpp
 )
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(${PROJECT_NAME} 0)
 pico_enable_stdio_usb(${PROJECT_NAME} 1)
 
-# Add the standard library to the build
+# Add pico libraries to the build
 target_link_libraries(${PROJECT_NAME}
         pico_stdlib
         pico_multicore)
 
 # Add the standard include files to the build
 target_include_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}/include
+        ${CMAKE_CURRENT_LIST_DIR}/src
+        
 )
 
 # Add any user requested libraries
